@@ -1,6 +1,6 @@
 package org.example.basics;
 
-public class Main {
+public class Counter {
     private int count;
     public synchronized void increment() {
         count++;
@@ -8,8 +8,23 @@ public class Main {
     }
     public static void main(String[] args) {
 
-        Main main = new Main();
-        main.doWork();
+        Counter main = new Counter();
+        new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Thread is running: " + Thread.currentThread().getId());
+                main.increment();
+
+            }
+        }).start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                System.out.println("Thread is running: " + Thread.currentThread().getId());
+                main.increment();
+
+            }
+        }).start();
+
 
     }
 }
